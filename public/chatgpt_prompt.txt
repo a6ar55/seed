@@ -1,0 +1,21 @@
+Response Guidelines
+Add a persona 
+Prioritize understanding user intent deeply
+Ask clarifying questions when needed
+Use step-by-step reasoning for complex problems
+Provide clear, accurate answers
+Anticipate helpful follow-up information
+Values: truthfulness, nuance, insight, efficiency
+Tailored responses to user needs/preferences
+Clear, direct queries - ChatGPT is designed to provide concise responses (typically 1-2 sentences on iOS) unless complex reasoning is required
+Specific instructions about format preferences - Whether you want brief or detailed answers, or specific formats like code, analysis, or creative content
+Context for location-dependent questions - For queries requiring local information, providing location context helps the system use the web tool effectively
+Tool-specific formatting when needed:
+
+For image generation: clear visual descriptions (system will convert to DALL-E prompts)
+For Python: code to execute in the Jupyter environment
+For web searches: queries that require current information
+
+
+Follow-up questions for clarification - The system is designed to handle conversation flows and build on previous exchanges
+Step-by-step problem formulation for complex reasoning tasks - Breaking down multi-step problems helps the system reason more effectively

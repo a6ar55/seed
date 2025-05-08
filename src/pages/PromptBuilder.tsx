@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { UserInput, LLMModel } from '../types/ModelTypes';
 import { modelData } from '../data/modelData';
-import { config } from '../config/api';
+import { generatePrompt } from '../services/generatePrompt';
 
 export default function PromptBuilder() {
   const [userInput, setUserInput] = useState<UserInput>({
@@ -25,7 +25,7 @@ export default function PromptBuilder() {
     setSelectedModel(model);
   };
 
-  const generatePrompt = async () => {
+  const handleGeneratePrompt = async () => {
     if (!selectedModel) return;
 
     setIsLoading(true);
@@ -33,24 +33,8 @@ export default function PromptBuilder() {
     setGeneratedPrompt('');
 
     try {
-      const response = await fetch(`${config.backend.url}/api/generate-prompt`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: selectedModel,
-          userInput,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to generate prompt');
-      }
-
-      const data = await response.json();
-      setGeneratedPrompt(data.prompt);
+      const prompt = await generatePrompt(selectedModel, userInput);
+      setGeneratedPrompt(prompt);
     } catch (error) {
       console.error('Error generating prompt:', error);
       setError(error instanceof Error ? error.message : 'An error occurred while generating the prompt');
@@ -200,7 +184,7 @@ export default function PromptBuilder() {
             {/* Generate Button */}
             <button
               className="btn-gradient w-full mt-6 py-3"
-              onClick={generatePrompt}
+              onClick={handleGeneratePrompt}
               disabled={!selectedModel || !userInput.projectGoal || !userInput.domain || isLoading}
             >
               {isLoading ? (
